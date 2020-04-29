@@ -186,6 +186,7 @@
     <Compile Include="Models\Zaidimas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repos\LeidejasRepository.cs" />
+    <Compile Include="Repos\ZaidimasRepository.cs" />
     <Compile Include="ViewModels\ZaidimasEditViewModel.cs" />
     <Compile Include="ViewModels\ZaidimasViewModel.cs" />
   </ItemGroup>

@@ -7,7 +7,7 @@ namespace Lab2.Models
 {
     public class Zaidimas
     {
-        public string Pavadinimas { get; set; }
+        public string pavadinimas { get; set; }
         public string zanras { get; set; }
         public string reitingas { get; set; }
         public int leidimo_metai { get; set; }
