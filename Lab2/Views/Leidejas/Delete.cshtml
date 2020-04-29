@@ -1,0 +1,62 @@
+﻿@model Lab2.Models.Leidejas
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Leidejo salinimas</h2>
+
+<h3>Ar tikrai norite pasalinti leideja?</h3>
+<div>
+    <h4>Leidejas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pavadinimas)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.pavadinimas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ikurimo_metai)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ikurimo_metai)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.tipas)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.tipas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.bustine)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.bustine)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.valstybe)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.valstybe)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @if (ViewBag.naudojama != null)
+            {
+                <h5 style="color:red">@ViewBag.naudojama</h5>
+            }
+            else
+            {
+                <input type="submit" value="salinti" class="btn btn-danger" />
+            }
+            @Html.ActionLink("Atgal i sarasa", "Index", "Leidejas", new { @class = "btn btn-default" })
+        </div>
+    }
+</div>
