@@ -22,7 +22,7 @@ namespace Lab2.ViewModels
         [MaxLength(20)]
         [Required]
         public string reitingas { get; set; }
-        [DisplayName("Leidimo emtai")]
+        [DisplayName("Leidimo metai")]
         [MaxLength(4)]
         [Required]
         public int leidimo_metai { get; set; }
