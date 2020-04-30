@@ -42,9 +42,9 @@ namespace Lab2.Repos
 
         //    return zaidimai;
         //}
-        public List<Zaidimas> getZaidimas(int id)
+        public List<ZaidimasViewModel> getZaidimas(int id)
         {
-            List<Zaidimas> zaidimai = new List<Zaidimas>();
+            List<ZaidimasViewModel> zaidimai = new List<ZaidimasViewModel>();
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"SELECT * from "  + "zaidimas WHERE fk_LEIDEJASid_LEIDEJAS=" + id;
@@ -57,13 +57,13 @@ namespace Lab2.Repos
 
             foreach (DataRow item in dt.Rows)
             {
-                zaidimai.Add(new Zaidimas
+                zaidimai.Add(new ZaidimasViewModel
                 {
                     pavadinimas = Convert.ToString(item["pavadinimas"]),
                     leidimo_metai = Convert.ToInt32(item["leidimo_metai"]),
                     zanras = Convert.ToString(item["zanras"]),
                     reitingas = Convert.ToString(item["reitingas"]),
-                    fk_LEIDEJAS = Convert.ToInt32(item["fk_LEIDEJASid_LEIDEJAS"]),
+                    //fk_LEIDEJAS = Convert.ToInt32(item["fk_LEIDEJASid_LEIDEJAS"]),
                     id_ZAIDIMAS = Convert.ToInt32(item["id_ZAIDIMAS"])
 
                 });
@@ -105,7 +105,7 @@ namespace Lab2.Repos
                                         )";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
             mySqlCommand.Parameters.Add("?pavadinimas", MySqlDbType.String).Value = zaidimasViewModel.pavadinimas;
-            mySqlCommand.Parameters.Add("?ledimoi_metai", MySqlDbType.Int32).Value = zaidimasViewModel.leidimo_metai;
+            mySqlCommand.Parameters.Add("?ledimo_metai", MySqlDbType.Int32).Value = zaidimasViewModel.leidimo_metai;
             mySqlCommand.Parameters.Add("?zanras", MySqlDbType.String).Value = zaidimasViewModel.zanras;
             mySqlCommand.Parameters.Add("?reitingas", MySqlDbType.String).Value = zaidimasViewModel.reitingas;
             mySqlCommand.Parameters.Add("?fk_LEIDEJASid_LEIDEJAS", MySqlDbType.Int32).Value = zaidimasViewModel.fk_LEIDEJASid_LEIDEJAS;

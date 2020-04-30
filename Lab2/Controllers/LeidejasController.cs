@@ -1,5 +1,6 @@
 ﻿using Lab2.Models;
 using Lab2.Repos;
+using Lab2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace Lab2.Controllers
                 // išsaugo nauja markę duomenų bazėje
                 if (ModelState.IsValid)
                 {
-                    leidejasRepository.addLeidejas(collection);
+                    //leidejasRepository.addLeidejas(collection);
                 }
 
                 return RedirectToAction("Index");
@@ -58,7 +59,7 @@ namespace Lab2.Controllers
 
         // POST: Leidejas/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Leidejas collection)
+        public ActionResult Edit(int id, LeidejasEditViewModel collection)
         {
             try
             {

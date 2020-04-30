@@ -1,4 +1,5 @@
 ﻿using Lab2.Models;
+using Lab2.ViewModels;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,35 @@ namespace Lab2.Repos
 
             return leidejas;
         }
-        public bool updateLeidejas(Leidejas leidejas)
+        public LeidejasEditViewModel getLeidejasViewModel(int id)
+        {
+            LeidejasEditViewModel leidejas = new LeidejasEditViewModel();
+
+            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"SELECT m.id_LEIDEJAS, m.pavadinimas, m.ikurimo_metai, m.tipas, m.bustine, m.valstybe
+                                FROM " + "leidejas m WHERE m.id_LEIDEJAS=" + id;
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            mySqlConnection.Open();
+            MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
+            DataTable dt = new DataTable();
+            mda.Fill(dt);
+            mySqlConnection.Close();
+
+            foreach (DataRow item in dt.Rows)
+            {
+
+                leidejas.pavadinimas = Convert.ToString(item["pavadinimas"]);
+                leidejas.ikurimo_metai = Convert.ToInt32(item["ikurimo_metai"]);
+                leidejas.tipas = Convert.ToString(item["tipas"]);
+                leidejas.bustine = Convert.ToString(item["bustine"]);
+                leidejas.valstybe = Convert.ToString(item["valstybe"]);
+                leidejas.id_LEIDEJAS = Convert.ToInt32(item["id_LEIDEJAS"]);
+            }
+
+            return leidejas;
+        }
+        public bool updateLeidejas(LeidejasEditViewModel leidejas)
         {
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
@@ -87,7 +116,7 @@ namespace Lab2.Repos
             mySqlConnection.Close();
             return true;
         }
-        public bool addLeidejas(Leidejas leidejas)
+        public bool addLeidejas(LeidejasEditViewModel leidejas)
         {
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
@@ -113,6 +142,24 @@ namespace Lab2.Repos
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();
+        }
+        public int insertPaslauga(LeidejasEditViewModel paslauga)
+        {
+            int insertedId = -1;
+            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"INSERT INTO " + "leidejas(pavadinimas, ikurimo_metai, tipas, bustine, valstybe)VALUES(?pavadinimas, ?ikurimo_metai, ?tipas, ?bustine, ?valstybe)";
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            mySqlCommand.Parameters.Add("?pavadinimas", MySqlDbType.VarChar).Value = paslauga.pavadinimas;
+            mySqlCommand.Parameters.Add("?ikurimo_metai", MySqlDbType.Int32).Value = paslauga.ikurimo_metai;
+            mySqlCommand.Parameters.Add("?tipas", MySqlDbType.VarChar).Value = paslauga.tipas;
+            mySqlCommand.Parameters.Add("?bustine", MySqlDbType.VarChar).Value = paslauga.bustine;
+            mySqlCommand.Parameters.Add("?valstybe", MySqlDbType.VarChar).Value = paslauga.valstybe;
+            mySqlConnection.Open();
+            mySqlCommand.ExecuteNonQuery();
+            mySqlConnection.Close();
+            insertedId = Convert.ToInt32(mySqlCommand.LastInsertedId);
+            return insertedId;
         }
 
     }
