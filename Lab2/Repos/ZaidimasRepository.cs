@@ -11,40 +11,49 @@ namespace Lab2.Repos
 {
     public class ZaidimasRepository
     {
-        //public List<Zaidimas> getZaidimai()
-        //{
-        //    List<Zaidimas> zaidimai = new List<Zaidimas>();
-        //    string databaseInfo = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
-        //    MySqlConnection mySqlConnection = new MySqlConnection(databaseInfo);
-        //    string query = @"SELECT *
-        //                    FROM leidejas";
-
-
-        //    MySqlCommand mySqlCommand = new MySqlCommand(query, mySqlConnection);
-        //    mySqlConnection.Open();
-        //    MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
-        //    DataTable dt = new DataTable();
-        //    mda.Fill(dt);
-        //    mySqlConnection.Close();
-
-        //    foreach (DataRow item in dt.Rows)
-        //    {
-        //        zaidimai.Add(new Zaidimas
-        //        {
-        //            pavadinimas = Convert.ToString(item["pavadinimas"]),
-        //            leidimo_metai = Convert.ToInt32(item["leidimo_metai"]),
-        //            zanras = Convert.ToString(item["zanras"]),
-        //            reitingas = Convert.ToString(item["reitingas"]),
-        //            fk_LEIDEJAS = Convert.ToInt32(item["fk_LEIDEJASid_LEIDEJAS"]),
-        //            id_ZAIDIMAS = Convert.ToInt32(item["id_ZAIDIMAS"])
-        //        });
-        //    }
-
-        //    return zaidimai;
-        //}
-        public List<ZaidimasViewModel> getZaidimas(int id)
+        public List<ZaidimasViewModel> getZaidimai()
         {
             List<ZaidimasViewModel> zaidimai = new List<ZaidimasViewModel>();
+            string databaseInfo = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            MySqlConnection mySqlConnection = new MySqlConnection(databaseInfo);
+            string query = @"SELECT
+                                k.pavadinimas,
+                                k.zanras,
+                                k.reitingas,
+                                k.leidimo_metai,
+                                k.id_ZAIDIMAS,
+                                l.pavadinimas AS leidejas
+                            FROM zaidimas k LEFT JOIN leidejas l
+                              on fk_LEIDEJASid_LEIDEJAS = l.id_LEIDEJAS";
+
+
+
+
+            MySqlCommand mySqlCommand = new MySqlCommand(query, mySqlConnection);
+            mySqlConnection.Open();
+            MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
+            DataTable dt = new DataTable();
+            mda.Fill(dt);
+            mySqlConnection.Close();
+
+            foreach (DataRow item in dt.Rows)
+            {
+                zaidimai.Add(new ZaidimasViewModel
+                {
+                    pavadinimas = Convert.ToString(item["pavadinimas"]),
+                    leidimo_metai = Convert.ToInt32(item["leidimo_metai"]),
+                    zanras = Convert.ToString(item["zanras"]),
+                    reitingas = Convert.ToString(item["reitingas"]),
+                    id_ZAIDIMAS = Convert.ToInt32(item["id_ZAIDIMAS"]),
+                    leidejas = Convert.ToString(item["leidejas"])
+                });
+            }
+
+            return zaidimai;
+        }
+        public List<ZaidimasEditViewModel> getZaidimas(int id)
+        {
+            List<ZaidimasEditViewModel> zaidimai = new List<ZaidimasEditViewModel>();
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"SELECT * from "  + "zaidimas WHERE fk_LEIDEJASid_LEIDEJAS=" + id;
@@ -57,7 +66,7 @@ namespace Lab2.Repos
 
             foreach (DataRow item in dt.Rows)
             {
-                zaidimai.Add(new ZaidimasViewModel
+                zaidimai.Add(new ZaidimasEditViewModel
                 {
                     pavadinimas = Convert.ToString(item["pavadinimas"]),
                     leidimo_metai = Convert.ToInt32(item["leidimo_metai"]),
@@ -86,7 +95,7 @@ namespace Lab2.Repos
 
             return true;
         }
-        public bool insertZaidimas(ZaidimasViewModel zaidimasViewModel)
+        public bool insertZaidimas(ZaidimasEditViewModel zaidimasViewModel)
         {
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);

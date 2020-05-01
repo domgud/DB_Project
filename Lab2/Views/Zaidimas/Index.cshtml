@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Lab2.ViewModels.ZaidimasViewModel>
+
+@{
+    ViewBag.Title = "Zaidimai";
+}
+
+<h2>Visi zaidimai</h2>
+
+
+
+<p>
+    @Html.ActionLink("Naujas zaidimas", "Create", "zaidimas", new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-striped datatable" border="1">
+    <thead>
+        <tr style="background-color: lightgreen">
+            @* Pridedami lenteliu pavadinimai *@
+            <th>
+                @Html.DisplayNameFor(model => model.id_ZAIDIMAS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pavadinimas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.zanras)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.reitingas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.leidimo_metai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.leidejas)
+            </th>
+            <th style="width: 20%"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @* Pridedama kiekviena eilute *@
+        @foreach (var zaidimas in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.id_ZAIDIMAS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.pavadinimas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.zanras)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.reitingas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.leidimo_metai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.leidejas)
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Redaguoti", "Edit", new { id = zaidimas.id_ZAIDIMAS }, new { @class = "btn btn-primary action" })
+                @Html.ActionLink("Pašalinti", "Delete", new { id = zaidimas.id_ZAIDIMAS }, new { @class = "btn btn-danger action" })
+            </td>
+        </tr>
+        }
+
+    </tbody>
+
+
+</table>
+

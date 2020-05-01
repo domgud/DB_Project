@@ -168,6 +168,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Komanda1Controller.cs" />
     <Compile Include="Controllers\Leidejas3Controller.cs" />
+    <Compile Include="Controllers\ZaidimasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -197,8 +198,8 @@
     <Compile Include="ViewModels\LeidejasEditViewModel.cs" />
     <Compile Include="ViewModels\TrenerisEditViewModel.cs" />
     <Compile Include="ViewModels\TrenerisViewModel.cs" />
-    <Compile Include="ViewModels\ZaidimasEditViewModel.cs" />
     <Compile Include="ViewModels\ZaidimasViewModel.cs" />
+    <Compile Include="ViewModels\ZaidimasEditViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -244,6 +245,7 @@
     <Content Include="Views\Komanda1\Create.cshtml" />
     <Content Include="Views\Komanda1\Delete.cshtml" />
     <Content Include="Views\Komanda1\Edit.cshtml" />
+    <Content Include="Views\Zaidimas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

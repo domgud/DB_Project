@@ -27,6 +27,7 @@ namespace Lab2.ViewModels
         public string valstybe { get; set; }
         [DisplayName("ID")]
         public int id_LEIDEJAS { get; set; }
-        public List<ZaidimasViewModel> zaidimai { get; set; }
+        public List<ZaidimasEditViewModel> zaidimai { get; set; }
+
     }
 }
