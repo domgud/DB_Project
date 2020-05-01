@@ -1,18 +1,18 @@
 ﻿@model Lab2.ViewModels.KomandaEditViewModel
 
 @{
-    ViewBag.Title = "Naujas kūrėjas";
+    ViewBag.Title = "Nauja komanda";
     var psl_k_count = 0;
 }
 
-<h2>Naujas kūrėjas</h2>
+<h2>Nauja komanda</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken();
 
     <fieldset>
-        <legend>Kurėjo informacija</legend>
+        <legend>Komandos informacija</legend>
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            @* Trukems laukelis *@
+            @* ikurimo metu *@
             <div class="form-group">
                 @Html.LabelFor(model => model.ikurimo_metai, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            @* Isleidimo metu laukelis *@
+            @* valstybe *@
             <div class="form-group">
                 @Html.LabelFor(model => model.valstybe, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -44,7 +44,7 @@
             </div>
 
 
-            @* Lyties laukelis *@
+            @* savininkas *@
             <div class="form-group">
                 @Html.LabelFor(model => model.savininkas, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -72,12 +72,12 @@
     }
 
     <fieldset>
-        <legend>Kuriamos TV Laidos</legend>
+        <legend>Kuriami treneriai</legend>
 
         <table class="table table-responsive" id="laidos_tbl">
             <thead>
                 <tr>
-                    <th>TV Laida</th>
+                    <th>Treneris</th>
                     <th></th>
                 </tr>
             </thead>
@@ -105,7 +105,7 @@
 }
 
 <div>
-    @Html.ActionLink("Atgal į sąrašą »", "Index", "TvLaidos", new { @class = "btn btn-default" })
+    @Html.ActionLink("Atgal į sąrašą »",  "Index", "komanda1", new { @class = "btn btn-default" })
 </div>
 
 @section Scripts {

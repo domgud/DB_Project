@@ -11,9 +11,9 @@ namespace Lab2.Repos
 {
     public class KomandaRepository
     {
-            public List<KomandaViewModel> getKurejai()
+            public List<KomandaViewModel> getKomandos()
             {
-                List<KomandaViewModel> kurejai = new List<KomandaViewModel>();
+                List<KomandaViewModel> komandos = new List<KomandaViewModel>();
                 string databaseInfo = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
                 MySqlConnection mySqlConnection = new MySqlConnection(databaseInfo);
                 string query = @"SELECT 
@@ -36,7 +36,7 @@ namespace Lab2.Repos
 
                 foreach (DataRow item in dt.Rows)
                 {
-                    kurejai.Add(new KomandaViewModel
+                    komandos.Add(new KomandaViewModel
                     {
                         id_KOMANDA = Convert.ToInt32(item["id_KOMANDA"]),
                         pavadinimas = Convert.ToString(item["pavadinimas"]),
@@ -46,10 +46,10 @@ namespace Lab2.Repos
                     });
                 }
 
-                return kurejai;
+                return komandos;
             }
 
-            public KomandaEditViewModel getKurejas(int id)
+            public KomandaEditViewModel getKomanda(int id)
             {
             KomandaEditViewModel kurejas = new KomandaEditViewModel();
 
@@ -84,7 +84,7 @@ namespace Lab2.Repos
                 return kurejas;
             }
 
-            public int addKurejas(KomandaEditViewModel kurejas)
+            public int addKomanda(KomandaEditViewModel komanda)
             {
                 int insertedId = -1;
                 string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
@@ -93,10 +93,10 @@ namespace Lab2.Repos
                 string query = @"INSERT INTO `komanda`(`pavadinimas`, `ikurimo_metai`, `valstybe`, `fk_SAVININKASid_SAVININKAS`) VALUES(?pavadinimas, ?ikurimo_metai, ?valstybe, ?savininkas)";
 
                 MySqlCommand mySqlCommand = new MySqlCommand(query, mySqlConnection);
-            mySqlCommand.Parameters.Add("?pavadinimas", MySqlDbType.VarChar).Value = kurejas.pavadinimas;
-            mySqlCommand.Parameters.Add("?valstybe", MySqlDbType.VarChar).Value = kurejas.valstybe;
-            mySqlCommand.Parameters.Add("?ikurimo_metai", MySqlDbType.Int32).Value = kurejas.ikurimo_metai;
-            mySqlCommand.Parameters.Add("?savininkas", MySqlDbType.Int32).Value = kurejas.savininkas;
+            mySqlCommand.Parameters.Add("?pavadinimas", MySqlDbType.VarChar).Value = komanda.pavadinimas;
+            mySqlCommand.Parameters.Add("?valstybe", MySqlDbType.VarChar).Value = komanda.valstybe;
+            mySqlCommand.Parameters.Add("?ikurimo_metai", MySqlDbType.Int32).Value = komanda.ikurimo_metai;
+            mySqlCommand.Parameters.Add("?savininkas", MySqlDbType.Int32).Value = komanda.savininkas;
 
 
                 mySqlConnection.Open();
@@ -107,7 +107,7 @@ namespace Lab2.Repos
                 return insertedId;
             }
 
-            public bool updateKurejas(KomandaEditViewModel kurejas)
+            public bool updateKomanda(KomandaEditViewModel komanda)
             {
                 string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
                 MySqlConnection mySqlConnection = new MySqlConnection(conn);
@@ -116,14 +116,14 @@ namespace Lab2.Repos
                                         `valstybe`= ?valstybe,
                                         `ikurimo_metai`= ?ikurimo_metai,
                                         `fk_SAVININKASid_SAVININKAS` = ?savininkas
-                                        WHERE id_KOMANDA =" + kurejas.id_KOMANDA;
+                                        WHERE id_KOMANDA =" + komanda.id_KOMANDA;
 
 
                 MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?pavadinimas", MySqlDbType.VarChar).Value = kurejas.pavadinimas;
-            mySqlCommand.Parameters.Add("?valstybe", MySqlDbType.VarChar).Value = kurejas.valstybe;
-            mySqlCommand.Parameters.Add("?ikurimo_metai", MySqlDbType.Int32).Value = kurejas.ikurimo_metai;
-            mySqlCommand.Parameters.Add("?savininkas", MySqlDbType.Int32).Value = kurejas.savininkas;
+            mySqlCommand.Parameters.Add("?pavadinimas", MySqlDbType.VarChar).Value = komanda.pavadinimas;
+            mySqlCommand.Parameters.Add("?valstybe", MySqlDbType.VarChar).Value = komanda.valstybe;
+            mySqlCommand.Parameters.Add("?ikurimo_metai", MySqlDbType.Int32).Value = komanda.ikurimo_metai;
+            mySqlCommand.Parameters.Add("?savininkas", MySqlDbType.Int32).Value = komanda.savininkas;
             mySqlConnection.Open();
                 mySqlCommand.ExecuteNonQuery();
                 mySqlConnection.Close();
@@ -131,7 +131,7 @@ namespace Lab2.Repos
                 return true;
             }
 
-            public void deleteKurejas(int id)
+            public void deleteKomanda(int id)
             {
                 string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
                 MySqlConnection mySqlConnection = new MySqlConnection(conn);

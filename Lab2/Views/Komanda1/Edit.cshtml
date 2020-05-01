@@ -1,23 +1,23 @@
 ﻿@model Lab2.ViewModels.KomandaEditViewModel
 
 @{
-    ViewBag.Title = "Redaguoti kūrėja";
+    ViewBag.Title = "Redaguoti komanda";
     var psl_k_count = 0;
 }
 
-<h2>Redaguoti kūrėja</h2>
+<h2>Redaguoti komanda</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken();
 
     <fieldset>
-        <legend>Kurėjo informacija</legend>
+        <legend>Komandos informacija</legend>
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.id_KOMANDA)
 
-            @* Pavadinimo laukelis *@
+
             <div class="form-group">
                 @Html.LabelFor(model => model.pavadinimas, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            @* Trukems laukelis *@
+
             <div class="form-group">
                 @Html.LabelFor(model => model.valstybe, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -35,7 +35,6 @@
                 </div>
             </div>
 
-            @* Isleidimo metu laukelis *@
             <div class="form-group">
                 @Html.LabelFor(model => model.ikurimo_metai, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -46,7 +45,6 @@
 
 
 
-            @* Lyties laukelis *@
             <div class="form-group">
                 @Html.LabelFor(model => model.savininkas, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -74,7 +72,7 @@
     }
 
     <fieldset>
-        <legend>Kuriamos TV Laidos</legend>
+        <legend>Kuriami treneriai</legend>
 
         <table class="table table-responsive" id="laidos_tbl">
             <thead>
@@ -89,6 +87,7 @@
                         <tr>
                             <td>
                                 <span class="text-hide sel_element" style="display: none;">@Model.treniruojaList[i].fk_TRENERISid_TRENERIS</span>
+                                @Model.treniruojaList[i].fk_TRENERISid_TRENERIS
                                 @Html.DropDownListFor(model => model.treniruojaList[i].fk_TRENERISid_TRENERIS, Model.TrenerisList, new { @class = "form-control" })
                             </td>
                             <td><button type="button" class="btn btn-danger" onclick="salinti(this);">šalinti</button></td>
@@ -107,7 +106,7 @@
 }
 
 <div>
-    @Html.ActionLink("Atgal į sąrašą »", "Index", "TvLaidos", new { @class = "btn btn-default" })
+    @Html.ActionLink("Atgal į sąrašą »", "Index", "komanda1", new { @class = "btn btn-default" })
 </div>
 
 @section Scripts {

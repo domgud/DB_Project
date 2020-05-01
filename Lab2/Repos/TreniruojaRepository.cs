@@ -11,14 +11,14 @@ namespace Lab2.Repos
 {
     public class TreniruojaRepository
     {
-        public List<Treniruoja> getKuria(int kurejo_id)
+        public List<Treniruoja> getTreniruoja(int id)
         {
-            List<Treniruoja> kuriamos = new List<Treniruoja>();
+            List<Treniruoja> treniruojamos = new List<Treniruoja>();
             string databaseInfo = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(databaseInfo);
             string query = @"SELECT *
                             FROM treniruoja
-                              WHERE fk_KOMANDAid_KOMANDA  =" + kurejo_id;
+                              WHERE fk_KOMANDAid_KOMANDA  =" + id;
 
 
             MySqlCommand mySqlCommand = new MySqlCommand(query, mySqlConnection);
@@ -31,17 +31,17 @@ namespace Lab2.Repos
 
             foreach (DataRow item in dt.Rows)
             {
-                kuriamos.Add(new Treniruoja
+                treniruojamos.Add(new Treniruoja
                 {
                     fk_TRENERISid_TRENERIS = Convert.ToInt32(item["fk_TRENERISid_TRENERIS"]),
                     fk_KOMANDAid_KOMANDA = Convert.ToInt32(item["fk_KOMANDAid_KOMANDA"])
                 });
             }
 
-            return kuriamos;
+            return treniruojamos;
         }
 
-        public bool addKuriamas(Treniruoja kurimas)
+        public bool addTreniruojamas(Treniruoja treniravimas)
         {
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
@@ -50,8 +50,8 @@ namespace Lab2.Repos
                             VALUES (?fk_KOMANDAid_KOMANDA, ?fk_TRENERISid_TRENERIS)";
 
             MySqlCommand mySqlCommand = new MySqlCommand(query, mySqlConnection);
-            mySqlCommand.Parameters.Add("?fk_KOMANDAid_KOMANDA", MySqlDbType.Int32).Value = kurimas.fk_KOMANDAid_KOMANDA;
-            mySqlCommand.Parameters.Add("?fk_TRENERISid_TRENERIS", MySqlDbType.Int32).Value = kurimas.fk_TRENERISid_TRENERIS;
+            mySqlCommand.Parameters.Add("?fk_KOMANDAid_KOMANDA", MySqlDbType.Int32).Value = treniravimas.fk_KOMANDAid_KOMANDA;
+            mySqlCommand.Parameters.Add("?fk_TRENERISid_TRENERIS", MySqlDbType.Int32).Value = treniravimas.fk_TRENERISid_TRENERIS;
 
 
 
@@ -62,13 +62,13 @@ namespace Lab2.Repos
             return true;
         }
 
-        public void deleteKuria(int Kurejo_id)
+        public void deleteKuria(int id)
         {
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"DELETE FROM treniruoja WHERE fk_KOMANDAid_KOMANDA=?fk_KOMANDAid_KOMANDA";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?fk_KOMANDAid_KOMANDA", MySqlDbType.Int32).Value = Kurejo_id;
+            mySqlCommand.Parameters.Add("?fk_KOMANDAid_KOMANDA", MySqlDbType.Int32).Value = id;
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();

@@ -10,14 +10,14 @@ namespace Lab2.Controllers
     public class Komanda1Controller : Controller
     {
         // GET: Komanda1
-        KomandaRepository kurejai = new KomandaRepository();
-        SavininkasRepository lytis = new SavininkasRepository();
-        TrenerisRepostiry tvlaidos = new TrenerisRepostiry();
-        TreniruojaRepository kuriaRepo = new TreniruojaRepository();
+        KomandaRepository komandos = new KomandaRepository();
+        SavininkasRepository savininkai = new SavininkasRepository();
+        TrenerisRepostiry treneriai = new TrenerisRepostiry();
+        TreniruojaRepository treniruojaRepo = new TreniruojaRepository();
         public ActionResult Index()
         {
             ModelState.Clear();
-            return View(kurejai.getKurejai());
+            return View(komandos.getKomandos());
         }
 
         // GET: Komanda1/Details/5
@@ -29,9 +29,9 @@ namespace Lab2.Controllers
         // GET: Komanda1/Create
         public ActionResult Create()
         {
-            KomandaEditViewModel kurejas = new KomandaEditViewModel();
-            PopulateSelections(kurejas);
-            return View(kurejas);
+            KomandaEditViewModel komanda = new KomandaEditViewModel();
+            PopulateSelections(komanda);
+            return View(komanda);
         }
 
         // POST: Komanda1/Create
@@ -42,9 +42,9 @@ namespace Lab2.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int kurejoID = kurejai.addKurejas(kurejas);
+                    int komandosID = komandos.addKomanda(kurejas);
 
-                    if (kurejoID < 0)
+                    if (komandosID < 0)
                     {
                         ViewBag.failed = "Nepavyko iterpti apdovanojimo";
                         return View(kurejas);
@@ -54,8 +54,8 @@ namespace Lab2.Controllers
                     {
                         foreach (var item in kurejas.treniruojaList)
                         {
-                            item.fk_KOMANDAid_KOMANDA = kurejoID;
-                            kuriaRepo.addKuriamas(item);
+                            item.fk_KOMANDAid_KOMANDA = komandosID;
+                            treniruojaRepo.addTreniruojamas(item);
                         }
                     }
                 }
@@ -71,9 +71,9 @@ namespace Lab2.Controllers
         // GET: Kurejai/Edit/5
         public ActionResult Edit(int id)
         {
-            KomandaEditViewModel kurejas = kurejai.getKurejas(id);
-            PopulateSelections(kurejas);
-            return View(kurejas);
+            KomandaEditViewModel komanda = komandos.getKomanda(id);
+            PopulateSelections(komanda);
+            return View(komanda);
         }
 
         // POST: Kurejai/Edit/5
@@ -82,15 +82,15 @@ namespace Lab2.Controllers
         {
             try
             {
-                kurejai.updateKurejas(kurejas);
-                kuriaRepo.deleteKuria(id);
+                komandos.updateKomanda(kurejas);
+                treniruojaRepo.deleteKuria(id);
 
                 if (kurejas.treniruojaList != null)
                 {
                     foreach (var item in kurejas.treniruojaList)
                     {
                         item.fk_KOMANDAid_KOMANDA = id;
-                        kuriaRepo.addKuriamas(item);
+                        treniruojaRepo.addTreniruojamas(item);
                     }
                 }
 
@@ -106,8 +106,8 @@ namespace Lab2.Controllers
         // GET: Komanda1/Edit/5
         public ActionResult Delete(int id)
         {
-            KomandaEditViewModel kurejas = kurejai.getKurejas(id);
-            return View(kurejas);
+            KomandaEditViewModel komanda = komandos.getKomanda(id);
+            return View(komanda);
         }
 
         // POST: Kurejai/Delete/5
@@ -119,7 +119,7 @@ namespace Lab2.Controllers
                 // TODO: Add delete logic here
 
 
-                kurejai.deleteKurejas(id);
+                komandos.deleteKomanda(id);
 
                 return RedirectToAction("Index");
             }
@@ -132,25 +132,25 @@ namespace Lab2.Controllers
         
         public void PopulateSelections(KomandaEditViewModel kurejas)
         {
-            var savininkas = lytis.getSavininkas();
-            var treneriai = tvlaidos.getShows();
+            var savininkas = savininkai.getSavininkas();
+            var treneriai = this.treneriai.getTreneriai();
 
-            List<SelectListItem> selectListLytis = new List<SelectListItem>();
-            List<SelectListItem> selectLaida = new List<SelectListItem>();
+            List<SelectListItem> selectedSavininkai = new List<SelectListItem>();
+            List<SelectListItem> selectedTreneriai = new List<SelectListItem>();
 
 
             foreach (var item in treneriai)
             {
-                selectLaida.Add(new SelectListItem() { Value = Convert.ToString(item.id_TRENERIS), Text = item.pavarde });
+                selectedTreneriai.Add(new SelectListItem() { Value = Convert.ToString(item.id_TRENERIS), Text = item.pavarde });
             }
             foreach (var item in savininkas)
             {
-                selectListLytis.Add(new SelectListItem() { Value = Convert.ToString(item.id_SAVININKAS), Text = item.pavarde });
+                selectedSavininkai.Add(new SelectListItem() { Value = Convert.ToString(item.id_SAVININKAS), Text = item.pavarde });
             }
 
-            kurejas.SavininkaiList = selectListLytis;
-            kurejas.TrenerisList = selectLaida;
-            kurejas.treniruojaList = kuriaRepo.getKuria(kurejas.id_KOMANDA);
+            kurejas.SavininkaiList = selectedSavininkai;
+            kurejas.TrenerisList = selectedTreneriai;
+            kurejas.treniruojaList = treniruojaRepo.getTreniruoja(kurejas.id_KOMANDA);
         }
     }
 }
