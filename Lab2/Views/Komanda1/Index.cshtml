@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Lab2.ViewModels.KomandaViewModel>
+
+@{
+    ViewBag.Title = "Komandos";
+}
+
+<h2>Visos komandos</h2>
+
+
+
+<p>
+    @Html.ActionLink("Nauja komanda", "Create", "Kurejai", new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-striped datatable" border="1">
+    <thead>
+        <tr style="background-color: lightgreen">
+            @* Pridedami lenteliu pavadinimai *@
+            <th>
+                @Html.DisplayNameFor(model => model.id_KOMANDA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pavadinimas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.valstybe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ikurimo_metai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.savininkas)
+            </th>
+            <th style="width: 20%"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @* Pridedama kiekviena eilute *@
+        @foreach (var aktorius in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => aktorius.id_KOMANDA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => aktorius.pavadinimas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => aktorius.valstybe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => aktorius.ikurimo_metai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => aktorius.savininkas)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Redaguoti", "Edit", new { id = aktorius.id_KOMANDA }, new { @class = "btn btn-primary action" })
+                    @Html.ActionLink("Pašalinti", "Delete", new { id = aktorius.id_KOMANDA }, new { @class = "btn btn-danger action" })
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+
