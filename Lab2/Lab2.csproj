@@ -167,7 +167,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Leidejas3Controller.cs" />
-    <Compile Include="Controllers\LeidejasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,13 +227,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Leidejas\Index.cshtml" />
-    <Content Include="Views\Leidejas\Create.cshtml" />
-    <Content Include="Views\Leidejas\Delete.cshtml" />
-    <Content Include="Views\Leidejas\Edit.cshtml" />
     <Content Include="Views\Leidejas3\Index.cshtml" />
     <Content Include="Views\Leidejas3\Create.cshtml" />
     <Content Include="Views\Leidejas3\Delete.cshtml" />
+    <Content Include="Views\Leidejas3\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

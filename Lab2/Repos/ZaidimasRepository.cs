@@ -75,11 +75,10 @@ namespace Lab2.Repos
         {
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"DELETE FROM a USING " + @"zaidimas as a
-                                where a.fk_LEIDEJASid_LEIDEJAS=?fkid ";
+            string sqlquery = @"DELETE FROM zaidimas where fk_LEIDEJASid_LEIDEJAS="+id;
                                     //and not exists (select 1 from " +  @"uzsakytos_paslaugos psl where psl.fk_paslauga=a.fk_paslauga and psl.fk_kaina_galioja_nuo=a.galioja_nuo)";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
-            mySqlCommand.Parameters.Add("?fkid", MySqlDbType.Int32).Value = id;
+            //mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = id;
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();

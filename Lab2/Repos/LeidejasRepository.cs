@@ -116,8 +116,9 @@ namespace Lab2.Repos
             mySqlConnection.Close();
             return true;
         }
-        public bool addLeidejas(LeidejasEditViewModel leidejas)
+        public int addLeidejas(LeidejasEditViewModel leidejas)
         {
+            int bazinga = -1;
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"INSERT INTO " + "leidejas(pavadinimas, ikurimo_metai, tipas, bustine, valstybe)VALUES(?pavadinimas, ?ikurimo_metai, ?tipas, ?bustine, ?valstybe)";
@@ -130,7 +131,8 @@ namespace Lab2.Repos
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();
-            return true;
+            bazinga = Convert.ToInt32(mySqlCommand.LastInsertedId);
+            return bazinga;
         }
         public void deleteLeidejas(int id)
         {

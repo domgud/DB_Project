@@ -57,6 +57,7 @@
                 @Html.DisplayFor(modelItem => item.valstybe)
             </td>
             <td>
+                @Html.ActionLink("Redaguoti", "Edit", new { id = item.id_LEIDEJAS }, new { @class = "btn btn-primary action" })
                 @Html.ActionLink("Šalinti", "Delete", new { id = item.id_LEIDEJAS }, new { @class = "btn btn-danger action" })
             </td>
         </tr>

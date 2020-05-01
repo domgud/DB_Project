@@ -1,0 +1,207 @@
+﻿@model Lab2.ViewModels.LeidejasEditViewModel
+
+@{
+    ViewBag.Title = "Naujas Leidejas";
+    var psl_k_count = 0;
+}
+
+<h2>Naujas Leidejas</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+
+<fieldset>
+    <legend>Leidejo informacija</legend>
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.pavadinimas, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.pavadinimas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.pavadinimas, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ikurimo_metai, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ikurimo_metai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ikurimo_metai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tipas, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tipas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.tipas, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.bustine, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bustine, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.bustine, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.valstybe, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.valstybe, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.valstybe, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Išsaugoti" class="btn btn-success" />
+        </div>
+    </div>
+
+
+</fieldset>
+
+
+    if (Model.zaidimai != null)
+    {
+        psl_k_count = Model.zaidimai.Count;
+    }
+    else
+    {
+        psl_k_count = 0;
+    }
+
+
+    <fieldset>
+        <legend>Zaidimai</legend>
+        <table>
+            <tr style="background-color: lightgreen">
+                @* Pridedami lenteliu pavadinimai *@
+                <th style="width: 300px">
+                    Pavadinimas
+                </th>
+                <th style="width: 300px">
+                    Reitingas
+                </th>
+                <th style="width: 300px">
+                    Leidimometai
+                </th>
+                <th style="width: 300px">
+                    Zanras
+                </th>
+            </tr>
+        </table>
+        <table class="table-responsive" id="zaidimai_tbl">
+            <tr style="background-color: lightgreen">
+                @* Pridedami lenteliu pavadinimai *@
+                <th style="width: 300px">
+
+                </th>
+                <th style="width: 300px">
+
+                </th>
+                <th style="width: 300px">
+
+                </th>
+                <th style="width: 300px">
+
+                </th>
+            </tr>
+            <tbody>
+                @{
+                    for (int i = 0; i < Model.zaidimai.Count; i++)
+                    {
+                                <tr>
+                                    <td>
+                                        @Html.HiddenFor(model => model.zaidimai[i].id_ZAIDIMAS)
+                                        @Html.HiddenFor(model => model.zaidimai[i].fk_LEIDEJASid_LEIDEJAS)
+                                        @Html.EditorFor(modelItem => Model.zaidimai[i].pavadinimas)
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(modelItem => Model.zaidimai[i].reitingas)
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(modelItem => Model.zaidimai[i].leidimo_metai)
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(modelItem => Model.zaidimai[i].zanras)
+                                    </td>
+                                    <td><button type="button" class="btn btn-danger" onclick="salinti(this)"><i class="glyphicon-remove"></i> Šalinti</button></td>
+                                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <input type="hidden" disabled value="@psl_k_count" id="hCount" />
+        <button type="button" id="prideti" class="btn btn-info pull-right" onclick="uzsakyti($('#hCount').val());">
+            <i class="glyphicon-plus-sign"></i>
+            Pridėti
+        </button>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Atgal į sąrašą »", "Index", "Leidejas3", new { @class = "btn btn-default" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+    function uzsakyti(sk) {
+        var tmp_row = `
+           <tr>
+                <td>
+                   <input data-val="true" data-val-number="The field fk_TV_Laidais_TV_LAIDA must be a number." data-val-required="The fk_TV_LAIDAid_TV_LAIDA field is required." id="zaidimai_` + sk + `__is_TV_LAIDA" name="zaidimai[` + sk + `].fk_TV_LAIDAid_TV_LAIDA" type="hidden" value="0">
+                   <input data-val="true" data-val-number="The field id_APDOVANOJIMAS must be a number." data-val-required="The id_APDOVANOJIMAS field is required." id="zaidimai_`+ sk + `__APDOVANOJIMAS" name="zaidimai[` + sk + `].id_APDOVANOJIMAS" type="hidden" value="0">
+                   <input data-val="true" data-val-text="The field pavadinimas must be a text." data-val-required="The pavadinimas field is required." id="zaidimai_`+ sk + `__Pavadinimas" name="zaidimai[` + sk + `].pavadinimas" type="text">
+                </td>
+                 <td>
+                    <input data-val="true" data-val-text="The field reitingas must be a text." data-val-required="The reitingas field is required." id="zaidimai_`+ sk + `__Reitingas" name="zaidimai[` + sk + `].reitingas" type="text">
+                 </td>
+                 <td>
+                    <input data-val="true" data-val-number="The field leidimo metai must be a number." data-val-required="The Gavimo metai field is required." id="zaidimai_`+ sk + `__LeidimoMetai" name="zaidimai[` + sk + `].leidimo_metai" type="number">
+                </td>
+                   <td>
+                    <input data-val="true" data-val-text="The field zanras must be a text." data-val-required="The zanras field is required." id="zaidimai_`+ sk + `__Zanras" name="zaidimai[` + sk + `].zanras" type="text">
+                 </td>
+                 <td><button type="button" class="btn btn-danger" onclick="salinti(this)"><i class="glyphicon-remove"></i> Šalinti</button></td>
+                </tr>`;
+
+            $("#zaidimai_tbl tr:last").after(tmp_row);
+
+        $('#hCount').val(Number($('#hCount').val()) + 1);
+
+        }
+
+        function salinti(btn) {
+            $(btn).closest('tr').remove();
+
+            //// Perskaiciuot indeksus
+            var cnt = 0;
+
+            $("#zaidimai_tbl tbody tr").each(function () {
+                var tmp_row = "<tr>" + $(this).html() + "</tr>";
+                var new_tmp_row = tmp_row.replace(/\[(.)\]/g, "[" + cnt + "]");
+                new_tmp_row = new_tmp_row.replace(/\_(.)\_/g, "_" + cnt + "_");
+                $(this).replaceWith(new_tmp_row);
+                cnt = cnt + 1;
+            });
+
+            $('#hCount').val(cnt);
+
+            $(".sel_element").each(function () {
+                $(this).closest("td").find("select").val($(this).text());
+            });
+        }
+    </script>
+}

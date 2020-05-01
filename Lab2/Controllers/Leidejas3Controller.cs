@@ -71,9 +71,9 @@ namespace Lab2.Controllers
         public ActionResult Edit(int id)
         {
             LeidejasEditViewModel leidejas = leidejasRepository.getLeidejasViewModel(id);
-            leidejas.zaidimai = zaidimasRepository.getZaidimas(id);
             UpdateTables(leidejas);
-            return View(leidejasRepository.getLeidejasViewModel(id));
+            //Užpildomi pasirinkimų sąrašai duomenimis iš duomenų saugyklų
+            return View(leidejas);
         }
 
         // POST: Leidejas/Edit/5
@@ -84,13 +84,15 @@ namespace Lab2.Controllers
             {
                 leidejasRepository.updateLeidejas(collection);
                 zaidimasRepository.deleteZaidimas(id);
-                UpdateTables(leidejasRepository.getLeidejasViewModel(id));
+                //leidejasRepository.deleteLeidejas(id);
+                //int index= leidejasRepository.addLeidejas(collection);
+                //UpdateTables(leidejasRepository.getLeidejasViewModel(index));
                 // atnajina markes informacija
                 if (collection.zaidimai != null)
                 {
                     foreach (var item in collection.zaidimai)
                     {
-                        item.fk_LEIDEJASid_LEIDEJAS= id;
+                        item.fk_LEIDEJASid_LEIDEJAS = id;
                         zaidimasRepository.insertZaidimas(item);
                     }
                 }
