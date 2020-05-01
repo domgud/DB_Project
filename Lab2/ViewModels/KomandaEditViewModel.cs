@@ -7,26 +7,26 @@ using Lab2.Models;
 
 namespace Lab2.ViewModels
 {
-    public class KomandaEditViewModelList
+    public class KomandaEditViewModel
     {
+
         [DisplayName("Pavadinimas")]
-        [MaxLength(50)]
         [Required]
         public string pavadinimas { get; set; }
-        [DisplayName("Ikurimo_metai")]
-        [MaxLength(50)]
+
+        [DisplayName("Ikurimo metai")]
         [Required]
         public int ikurimo_metai { get; set; }
+
         [DisplayName("Valstybe")]
-        [MaxLength(50)]
         [Required]
         public string valstybe { get; set; }
+
         [DisplayName("Savininkas")]
-        [MaxLength(50)]
         [Required]
         public int savininkas { get; set; }
+
         [DisplayName("ID")]
-        [MaxLength(50)]
         [Required]
         public int id_KOMANDA { get; set; }
       

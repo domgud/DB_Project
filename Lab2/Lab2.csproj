@@ -192,7 +192,7 @@
     <Compile Include="Repos\TrenerisRepostiry.cs" />
     <Compile Include="Repos\TreniruojaRepository.cs" />
     <Compile Include="Repos\ZaidimasRepository.cs" />
-    <Compile Include="ViewModels\KomandaEditViewModelList.cs" />
+    <Compile Include="ViewModels\KomandaEditViewModel.cs" />
     <Compile Include="ViewModels\KomandaViewModel.cs" />
     <Compile Include="ViewModels\LeidejasEditViewModel.cs" />
     <Compile Include="ViewModels\TrenerisEditViewModel.cs" />
@@ -241,6 +241,9 @@
     <Content Include="Views\Leidejas3\Delete.cshtml" />
     <Content Include="Views\Leidejas3\Edit.cshtml" />
     <Content Include="Views\Komanda1\Index.cshtml" />
+    <Content Include="Views\Komanda1\Create.cshtml" />
+    <Content Include="Views\Komanda1\Delete.cshtml" />
+    <Content Include="Views\Komanda1\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

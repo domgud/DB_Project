@@ -1,0 +1,61 @@
+﻿@model Lab2.ViewModels.KomandaEditViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Kurėjo šalinimas</h2>
+
+<h3>Ar tikrai norite pašalinti šį kūrėja?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_KOMANDA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_KOMANDA)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pavadinimas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pavadinimas)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ikurimo_metai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ikurimo_metai)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.valstybe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valstybe)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Šalinti" class="btn btn-danger" />
+            @Html.ActionLink("Atgal į sąrašą", "Index", "komanda1", new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

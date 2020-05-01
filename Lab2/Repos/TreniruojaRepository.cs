@@ -33,7 +33,7 @@ namespace Lab2.Repos
             {
                 kuriamos.Add(new Treniruoja
                 {
-                    fk_TRENERISid_TRENERIS = Convert.ToInt32(item["	fk_TRENERISid_TRENERIS"]),
+                    fk_TRENERISid_TRENERIS = Convert.ToInt32(item["fk_TRENERISid_TRENERIS"]),
                     fk_KOMANDAid_KOMANDA = Convert.ToInt32(item["fk_KOMANDAid_KOMANDA"])
                 });
             }
@@ -46,11 +46,11 @@ namespace Lab2.Repos
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
 
-            string query = @"INSERT INTO `treniruoja`(`fk_KOMANDAid_KOMANDA `, `fk_TRENERISid_TRENERIS`) 
-                            VALUES (?fk_KOMANDAid_KOMANDA ,?fk_TRENERISid_TRENERIS)";
+            string query = @"INSERT INTO `treniruoja`(`fk_KOMANDAid_KOMANDA`, `fk_TRENERISid_TRENERIS`) 
+                            VALUES (?fk_KOMANDAid_KOMANDA, ?fk_TRENERISid_TRENERIS)";
 
             MySqlCommand mySqlCommand = new MySqlCommand(query, mySqlConnection);
-            mySqlCommand.Parameters.Add("?fk_KOMANDAid_KOMANDA ", MySqlDbType.Int32).Value = kurimas.fk_KOMANDAid_KOMANDA;
+            mySqlCommand.Parameters.Add("?fk_KOMANDAid_KOMANDA", MySqlDbType.Int32).Value = kurimas.fk_KOMANDAid_KOMANDA;
             mySqlCommand.Parameters.Add("?fk_TRENERISid_TRENERIS", MySqlDbType.Int32).Value = kurimas.fk_TRENERISid_TRENERIS;
 
 

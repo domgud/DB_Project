@@ -49,9 +49,9 @@ namespace Lab2.Repos
                 return kurejai;
             }
 
-            public KomandaEditViewModelList getKurejas(int id)
+            public KomandaEditViewModel getKurejas(int id)
             {
-            KomandaEditViewModelList kurejas = new KomandaEditViewModelList();
+            KomandaEditViewModel kurejas = new KomandaEditViewModel();
 
                 string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
                 MySqlConnection mySqlConnection = new MySqlConnection(conn);
@@ -78,19 +78,19 @@ namespace Lab2.Repos
                     kurejas.pavadinimas = Convert.ToString(item["pavadinimas"]);
                     kurejas.valstybe = Convert.ToString(item["valstybe"]);
                     kurejas.ikurimo_metai= Convert.ToInt32(item["ikurimo_metai"]);
-                    kurejas.savininkas = Convert.ToInt32(item["k.fk_SAVININKASid_SAVININKAS"]);
+                    kurejas.savininkas = Convert.ToInt32(item["fk_SAVININKASid_SAVININKAS"]);
                 }
 
                 return kurejas;
             }
 
-            public int addKurejas(KomandaEditViewModelList kurejas)
+            public int addKurejas(KomandaEditViewModel kurejas)
             {
                 int insertedId = -1;
                 string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
                 MySqlConnection mySqlConnection = new MySqlConnection(conn);
 
-                string query = @"INSERT INTO `komanda`(`pavadinimas`, `ikurimo_metai`, `valstybe`, `id_KOMANDA`, `fk_SAVININKASid_SAVININKAS`) VALUES(?pavadinimas, ?ikurimo_metai, ?valstybe, NULL, ?savininkas)";
+                string query = @"INSERT INTO `komanda`(`pavadinimas`, `ikurimo_metai`, `valstybe`, `fk_SAVININKASid_SAVININKAS`) VALUES(?pavadinimas, ?ikurimo_metai, ?valstybe, ?savininkas)";
 
                 MySqlCommand mySqlCommand = new MySqlCommand(query, mySqlConnection);
             mySqlCommand.Parameters.Add("?pavadinimas", MySqlDbType.VarChar).Value = kurejas.pavadinimas;
@@ -107,7 +107,7 @@ namespace Lab2.Repos
                 return insertedId;
             }
 
-            public bool updateKurejas(KomandaEditViewModelList kurejas)
+            public bool updateKurejas(KomandaEditViewModel kurejas)
             {
                 string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
                 MySqlConnection mySqlConnection = new MySqlConnection(conn);
@@ -115,7 +115,7 @@ namespace Lab2.Repos
                                         `pavadinimas`= ?pavadinimas,
                                         `valstybe`= ?valstybe,
                                         `ikurimo_metai`= ?ikurimo_metai,
-                                        `fk_SAVININKASid_SAVININKAS ` = ?savininkas,
+                                        `fk_SAVININKASid_SAVININKAS` = ?savininkas
                                         WHERE id_KOMANDA =" + kurejas.id_KOMANDA;
 
 
