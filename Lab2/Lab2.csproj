@@ -246,6 +246,9 @@
     <Content Include="Views\Komanda1\Delete.cshtml" />
     <Content Include="Views\Komanda1\Edit.cshtml" />
     <Content Include="Views\Zaidimas\Index.cshtml" />
+    <Content Include="Views\Zaidimas\Create.cshtml" />
+    <Content Include="Views\Zaidimas\Edit.cshtml" />
+    <Content Include="Views\Zaidimas\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

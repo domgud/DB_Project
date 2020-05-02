@@ -77,7 +77,7 @@
         <table class="table table-responsive" id="laidos_tbl">
             <thead>
                 <tr>
-                    <th>TV Laida</th>
+                    <th>Treneris</th>
                     <th></th>
                 </tr>
             </thead>
@@ -89,6 +89,7 @@
                                 <span class="text-hide sel_element" style="display: none;">@Model.treniruojaList[i].fk_TRENERISid_TRENERIS</span>
                                 @Model.treniruojaList[i].fk_TRENERISid_TRENERIS
                                 @Html.DropDownListFor(model => model.treniruojaList[i].fk_TRENERISid_TRENERIS, Model.TrenerisList, new { @class = "form-control" })
+
                             </td>
                             <td><button type="button" class="btn btn-danger" onclick="salinti(this);">šalinti</button></td>
                         </tr>

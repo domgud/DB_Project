@@ -15,14 +15,14 @@ namespace Lab2.ViewModels
         public string pavadinimas { get; set; }
         [DisplayName("Zanras")]
         public string zanras { get; set; }
-        [DisplayName("Marke")]
+        [DisplayName("Reitingas")]
         public string reitingas { get; set; }
         [DisplayName("Leidimo metai")]
         public int leidimo_metai { get; set; }
 
         [DisplayName("ID")]
         public int id_ZAIDIMAS { get; set; }
-
+        [DisplayName("Leidejas")]
         public int fk_LEIDEJASid_LEIDEJAS { get; set; }
         public IList<SelectListItem> LeidejaiList { get; set; }
         public List<Leidejas> treniruojaList { get; set; }

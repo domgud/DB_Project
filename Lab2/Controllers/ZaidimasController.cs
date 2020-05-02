@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Lab2.Repos;
+using Lab2.ViewModels;
+
 namespace Lab2.Controllers
 {
     public class ZaidimasController : Controller
     {
         ZaidimasRepository zaidimai = new ZaidimasRepository();
+        LeidejasRepository leidejai = new LeidejasRepository();
         // GET: Zaidimas
         public ActionResult Index()
         {
@@ -25,21 +28,34 @@ namespace Lab2.Controllers
         // GET: Zaidimas/Create
         public ActionResult Create()
         {
-            return View();
+            ZaidimasEditViewModel zaidimas = new ZaidimasEditViewModel();
+            PopulateSelections(zaidimas);
+            return View(zaidimas);
         }
 
         // POST: Zaidimas/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ZaidimasEditViewModel zaidimas)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    int zaidimoID = zaidimai.insertZaidimas(zaidimas);
+
+                    if (zaidimoID < 0)
+                    {
+                        ViewBag.failed = "Nepavyko iterpti";
+                        return View(zaidimas);
+                    }
+
+                }
 
                 return RedirectToAction("Index");
             }
             catch
             {
+                PopulateSelections(zaidimas);
                 return View();
             }
         }
@@ -47,38 +63,47 @@ namespace Lab2.Controllers
         // GET: Zaidimas/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ZaidimasEditViewModel zaidimas = zaidimai.getZaidimasID(id);
+            PopulateSelections(zaidimas);
+            return View(zaidimas);
         }
 
         // POST: Zaidimas/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, ZaidimasEditViewModel zaidimas)
         {
             try
             {
-                // TODO: Add update logic here
+                //zaidimas.id_ZAIDIMAS = id;
+                zaidimai.updateZaidimas(zaidimas);
+
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                PopulateSelections(zaidimas);
+                return View(zaidimas);
             }
         }
 
         // GET: Zaidimas/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            ZaidimasEditViewModel zaidimas = zaidimai.getZaidimasID(id);
+            return View(zaidimas);
         }
 
         // POST: Zaidimas/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, ZaidimasEditViewModel zaidimas)
         {
             try
             {
                 // TODO: Add delete logic here
+
+
+                zaidimai.deleteZaidimasID(id);
 
                 return RedirectToAction("Index");
             }
@@ -86,6 +111,20 @@ namespace Lab2.Controllers
             {
                 return View();
             }
+        }
+        public void PopulateSelections(ZaidimasEditViewModel zaidimas)
+        {
+            var leidejaiList = leidejai.getLeidejai();
+
+            List<SelectListItem> selectedLeidejai = new List<SelectListItem>();
+
+
+            foreach (var item in leidejaiList)
+            {
+                selectedLeidejai.Add(new SelectListItem() { Value = Convert.ToString(item.id_LEIDEJAS), Text = item.pavadinimas });
+            }
+
+            zaidimas.LeidejaiList = selectedLeidejai;
         }
     }
 }

@@ -7,7 +7,7 @@
 <h2>Leidejai</h2>
 
 <p>
-    @Html.ActionLink("Naujas leidejas", "Create", "Marke", new { @class = "btn btn-success" })
+    @Html.ActionLink("Naujas leidejas", "Create", "leidejas3", new { @class = "btn btn-success" })
 </p>
 <table class="table table-striped datatable">
     <thead>
@@ -58,7 +58,7 @@
             </td>
             <td>
                 @Html.ActionLink("Redaguoti", "Edit", new { id = item.id_LEIDEJAS }, new { @class = "btn btn-primary action" })
-                @Html.ActionLink("Šalinti", "Delete", new { id = item.id_LEIDEJAS }, new { @class = "btn btn-danger action" })
+                @Html.ActionLink("Pasalinti", "Delete", new { id = item.id_LEIDEJAS }, new { @class = "btn btn-danger action" })
             </td>
         </tr>
         }

@@ -80,6 +80,35 @@ namespace Lab2.Repos
 
             return zaidimai;
         }
+        public ZaidimasEditViewModel getZaidimasID(int id)
+        {
+            ZaidimasEditViewModel zaidimas = new ZaidimasEditViewModel();
+
+            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string query = @"SELECT `pavadinimas`, `zanras`, `reitingas`, `leidimo_metai`, `id_ZAIDIMAS`, `fk_LEIDEJASid_LEIDEJAS`, `id_ZAIDIMAS` FROM `zaidimas` WHERE id_ZAIDIMAS=" + id;
+
+            MySqlCommand mySqlCommand = new MySqlCommand(query, mySqlConnection);
+            mySqlConnection.Open();
+            MySqlDataAdapter mda = new MySqlDataAdapter(mySqlCommand);
+            DataTable dt = new DataTable();
+            mda.Fill(dt);
+            mySqlConnection.Close();
+
+            foreach (DataRow item in dt.Rows)
+            {
+                zaidimas.pavadinimas = Convert.ToString(item["pavadinimas"]);
+                zaidimas.leidimo_metai = Convert.ToInt32(item["leidimo_metai"]);
+                zaidimas.zanras = Convert.ToString(item["zanras"]);
+                zaidimas.reitingas = Convert.ToString(item["reitingas"]);
+                zaidimas.id_ZAIDIMAS = Convert.ToInt32(item["id_ZAIDIMAS"]);
+                zaidimas.fk_LEIDEJASid_LEIDEJAS = Convert.ToInt32(item["fk_LEIDEJASid_LEIDEJAS"]);
+                zaidimas.id_ZAIDIMAS = Convert.ToInt32(item["id_ZAIDIMAS"]);
+            }
+
+            return zaidimas;
+        }
+
         public bool deleteZaidimas(int id)
         {
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
@@ -95,8 +124,9 @@ namespace Lab2.Repos
 
             return true;
         }
-        public bool insertZaidimas(ZaidimasEditViewModel zaidimasViewModel)
+        public int insertZaidimas(ZaidimasEditViewModel zaidimasViewModel)
         {
+            int id = -1;
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
             string sqlquery = @"INSERT INTO "  + @"zaidimas(
@@ -120,7 +150,49 @@ namespace Lab2.Repos
             mySqlConnection.Open();
             mySqlCommand.ExecuteNonQuery();
             mySqlConnection.Close();
+            id = Convert.ToInt32(mySqlCommand.LastInsertedId);
+            return id;
+        }
+        public bool updateZaidimas(ZaidimasEditViewModel zaidimas)
+        {
+            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"UPDATE `zaidimas` SET 
+             `pavadinimas`=?pavadinimas,
+             `zanras`=?zanras,
+             `reitingas`=?reitingas,
+             `leidimo_metai`=?leidimo_metai,
+             `fk_LEIDEJASid_LEIDEJAS`=?fk 
+             WHERE id_ZAIDIMAS="+ zaidimas.id_ZAIDIMAS;
+
+
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            mySqlCommand.Parameters.Add("?pavadinimas", MySqlDbType.VarChar).Value = zaidimas.pavadinimas;
+            mySqlCommand.Parameters.Add("?zanras", MySqlDbType.VarChar).Value = zaidimas.zanras;
+            mySqlCommand.Parameters.Add("?reitingas", MySqlDbType.VarChar).Value = zaidimas.reitingas;
+            mySqlCommand.Parameters.Add("?leidimo_metai", MySqlDbType.Int32).Value = zaidimas.leidimo_metai;
+            mySqlCommand.Parameters.Add("?fk", MySqlDbType.Int32).Value = zaidimas.fk_LEIDEJASid_LEIDEJAS;
+            mySqlConnection.Open();
+            mySqlCommand.ExecuteNonQuery();
+            mySqlConnection.Close();
+
+            return true;
+        }
+        public bool deleteZaidimasID(int id)
+        {
+            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"DELETE FROM zaidimas where id_ZAIDIMAS=" + id;
+            //and not exists (select 1 from " +  @"uzsakytos_paslaugos psl where psl.fk_paslauga=a.fk_paslauga and psl.fk_kaina_galioja_nuo=a.galioja_nuo)";
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            //mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = id;
+            mySqlConnection.Open();
+            mySqlCommand.ExecuteNonQuery();
+            mySqlConnection.Close();
+
+
             return true;
         }
     }
+
 }

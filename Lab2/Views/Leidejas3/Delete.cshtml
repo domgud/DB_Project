@@ -1,72 +1,80 @@
 ﻿@model Lab2.Models.Leidejas
 
 @{
-    ViewBag.Title = "Naujas leidejas";
+    ViewBag.Title = "Delete";
 }
 
-<h2>Naujas leidejas</h2>
+<h2>Leidejo salinimas</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <fieldset>
-        <legend>Leidejo informacija</legend>
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.pavadinimas, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.pavadinimas, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.pavadinimas, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ikurimo_metai, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ikurimo_metai, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ikurimo_metai, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.tipas, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.tipas, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.tipas, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.bustine, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.bustine, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.bustine, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.valstybe, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.valstybe, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.valstybe, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Issaugoti" class="btn btn-success" />
-                </div>
-            </div>
-        </div>
-    </fieldset>
-}
-
+<h3>Ar tikrai norite pasalinti si leideja?</h3>
 <div>
-    @Html.ActionLink("atgal i sarasa »", "Index", "Leidejas", new { @class = "btn btn-default" })
-</div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_LEIDEJAS)
+        </dt>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        <dd>
+            @Html.DisplayFor(model => model.id_LEIDEJAS)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pavadinimas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pavadinimas)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ikurimo_metai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ikurimo_metai)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.valstybe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valstybe)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.bustine)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bustine)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tipas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipas)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Šalinti" class="btn btn-danger" />
+            @Html.ActionLink("Atgal i sarasa", "Index", "komanda1", new { @class = "btn btn-default" })
+        </div>
+    }
+</div>
