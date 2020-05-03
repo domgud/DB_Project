@@ -51,7 +51,7 @@ namespace Lab2.Repos
 
             string query = @"SELECT `vardas`, `pavarde`, `amzius`, `slapyvardis`, `id_TRENERIS`
                             FROM treneris a
-                            WHERE ad_TRENERIS =" + id;
+                            WHERE a.id_TRENERIS =" + id;
 
             MySqlCommand mySqlCommand = new MySqlCommand(query, mySqlConnection);
             mySqlConnection.Open();
@@ -72,7 +72,7 @@ namespace Lab2.Repos
             return modelis;
         }
 
-        public int addShow(TrenerisEditViewModel treneris)
+        public int addTreneris(TrenerisEditViewModel treneris)
         {
             int insertedId = -1;
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
@@ -92,6 +92,42 @@ namespace Lab2.Repos
 
             insertedId = Convert.ToInt32(mySqlCommand.LastInsertedId);
             return insertedId;
+        }
+        public bool deleteTreneris(int id)
+        {
+            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"DELETE FROM treneris where id_TRENERIS=" + id;
+            //and not exists (select 1 from " +  @"uzsakytos_paslaugos psl where psl.fk_paslauga=a.fk_paslauga and psl.fk_kaina_galioja_nuo=a.galioja_nuo)";
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            //mySqlCommand.Parameters.Add("?id", MySqlDbType.Int32).Value = id;
+            mySqlConnection.Open();
+            mySqlCommand.ExecuteNonQuery();
+            mySqlConnection.Close();
+
+
+            return true;
+        }
+        public bool updateTreneris(TrenerisEditViewModel treneris)
+        {
+            string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
+            MySqlConnection mySqlConnection = new MySqlConnection(conn);
+            string sqlquery = @"UPDATE `treneris` SET
+            `vardas`=?vardas,
+            `pavarde`=?pavarde,
+            `amzius`=?amzius,
+            `slapyvardis`=?slapyvardis
+             WHERE id_TRENERIS =" + treneris.id_TRENERIS;
+            MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
+            mySqlCommand.Parameters.Add("?vardas", MySqlDbType.VarChar).Value = treneris.vardas;
+            mySqlCommand.Parameters.Add("?pavarde", MySqlDbType.VarChar).Value = treneris.pavarde;
+            mySqlCommand.Parameters.Add("?slapyvardis", MySqlDbType.VarChar).Value = treneris.slapyvadis;
+            mySqlCommand.Parameters.Add("?amzius", MySqlDbType.Int32).Value = treneris.amzius;
+            mySqlConnection.Open();
+            mySqlCommand.ExecuteNonQuery();
+            mySqlConnection.Close();
+
+            return true;
         }
 
     }

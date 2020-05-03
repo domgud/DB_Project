@@ -1,0 +1,70 @@
+﻿@model Lab2.ViewModels.TrenerisEditViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Trenerio salinimas</h2>
+
+<h3>Ar tikrai norite pasalinti si treneri?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_TRENERIS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_TRENERIS)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.vardas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vardas)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pavarde)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pavarde)
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.amzius)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.amzius)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.slapyvadis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.slapyvadis)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Šalinti" class="btn btn-danger" />
+            @Html.ActionLink("Atgal i sarasa", "Index", "teneris", new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

@@ -168,6 +168,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Komanda1Controller.cs" />
     <Compile Include="Controllers\Leidejas3Controller.cs" />
+    <Compile Include="Controllers\TrenerisController.cs" />
     <Compile Include="Controllers\ZaidimasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -249,10 +250,13 @@
     <Content Include="Views\Zaidimas\Create.cshtml" />
     <Content Include="Views\Zaidimas\Edit.cshtml" />
     <Content Include="Views\Zaidimas\Delete.cshtml" />
+    <Content Include="Views\Treneris\Index.cshtml" />
+    <Content Include="Views\Treneris\Delete.cshtml" />
+    <Content Include="Views\Treneris\Create.cshtml" />
+    <Content Include="Views\Treneris\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Dalyvauja\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

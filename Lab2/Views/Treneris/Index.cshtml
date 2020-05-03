@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Lab2.ViewModels.TrenerisViewModel>
+
+@{
+    ViewBag.Title = "Treneriai";
+}
+
+<h2>Visi treneriai</h2>
+
+
+
+<p>
+    @Html.ActionLink("Naujas treneris", "Create", "treneris", new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-striped datatable" border="1">
+    <thead>
+        <tr style="background-color: lightgreen">
+            @* Pridedami lenteliu pavadinimai *@
+            <th>
+                @Html.DisplayNameFor(model => model.id_TRENERIS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.vardas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pavarde)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amzius)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.slapyvadis)
+            </th>
+            <th style="width: 20%"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @* Pridedama kiekviena eilute *@
+        @foreach (var zaidimas in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.id_TRENERIS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.vardas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.pavarde)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.amzius)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => zaidimas.slapyvadis)
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Redaguoti", "Edit", new { id = zaidimas.id_TRENERIS }, new { @class = "btn btn-primary action" })
+                @Html.ActionLink("Pasalinti", "Delete", new { id = zaidimas.id_TRENERIS }, new { @class = "btn btn-danger action" })
+            </td>
+        </tr>
+        }
+
+    </tbody>
+
+
+</table>
+
