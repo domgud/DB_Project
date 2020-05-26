@@ -1,0 +1,88 @@
+﻿@model Lab2.ViewModels.AtaskaitaViewModel
+
+@{
+    ViewBag.Title = "Sutartys";
+}
+
+<h2>Sudarytų sutarčių ataskaita</h2>
+<p><b>Parengta:</b> @DateTime.Now</p>
+
+@using (Html.BeginForm())
+{
+<div class="form-group">
+    <label>Nuo data: </label>
+    @*<input class="form-inline date-picker" type="datetime" name="nuo" value="@Model.nuo" />*@
+    @Html.EditorFor(model => model.nuo, new { @class = "date-picker" })
+    <label>Metai nuo: </label>
+    @Html.EditorFor(model => model.nuoLeidejoMetai, new { @class = "form-control" })
+    <label>Pinigai nuo: </label>
+    @Html.EditorFor(model => model.nuoTurnyroPinigai, new { @class = "form-control" })
+    <input class="btn btn-default" type="submit" value="Atrinkti">
+</div>
+}
+
+
+<table class="table table-striped">
+    <tr style="background-color:lightblue">
+        <th>
+            @Html.DisplayNameFor(model => model.sutartys[0].Turnyras)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sutartys[0].Pinigai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sutartys[0].Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sutartys[0].Organizatorius)
+        </th>
+    </tr>
+
+    @if (Model.sutartys.Count == 0)
+    {
+        <tr>
+            <td colspan="4" align="center"><b style="color:red;">Nurodytame laikotarpyje nebuvo sudarytų sutarčių</b></td>
+        </tr>
+    }
+
+    @for (int i = 0; i < Model.sutartys.Count; i++)
+    {
+        if (i == 0 || (Model.sutartys[i].Zaidimas != Model.sutartys[i - 1].Zaidimas))
+        {
+            <tr style="background-color: lightblue">
+                <td colspan="4" align="center"><b>@Model.sutartys[i].Leidejas @Model.sutartys[i].Zaidimas</b></td>
+            </tr>
+        }
+        <tr>
+            <td>@Model.sutartys[i].Turnyras</td>
+            <td>@Model.sutartys[i].Pinigai</td>
+            <td>@Model.sutartys[i].Data</td>
+            <td>@Model.sutartys[i].Organizatorius</td>
+        </tr>
+
+        if (i == Model.sutartys.Count - 1 || Model.sutartys[i].Zaidimas != Model.sutartys[i + 1].Zaidimas)
+        {
+<tr style="background-color: greenyellow">
+    <td>Minimum: @Model.sutartys[i].Minimum</td>
+    <td>Maximum: @Model.sutartys[i].Maximum</td>
+    <td>Bendra pinigu suma: @Model.sutartys[i].BendraSuma</td>
+    <td>Bendras turnyru skaicius: @Model.sutartys[i].BendrasKiekis</td>
+</tr>
+        }
+
+    }
+
+    <tr style="background-color: lightblue">
+        <td height="10px;" colspan="4" align="center"><b>Bendra suma</b></td>
+    </tr>
+
+    @*<tr>
+        <td colspan="2"></td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.visoSumaSutartciu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.visoSumaPaslauga)
+        </td>
+    </tr>*@
+</table>
