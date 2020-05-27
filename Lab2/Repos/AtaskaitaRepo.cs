@@ -16,7 +16,7 @@ namespace Lab2.Repos
             List<STurnyrasViewModel> sutartys = new List<STurnyrasViewModel>();
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"SELECT a.pavadinimas as leidejas, a.ikurimo_metai, b.pavadinimas as zaidimas, t.bendra_suma,t.kiekis, t.minimum, t.maximum, c.pavadinimas as turnyras, c.prizu_fondo_dydis as pinigai, c.data as data, d.pavadinimas as organizatorius FROM leidejas a
+            string sqlquery = @"SELECT a.pavadinimas as leidejas, b.pavadinimas as zaidimas, t.bendra_suma,t.kiekis, t.minimum, t.maximum, c.pavadinimas as turnyras, c.prizu_fondo_dydis as pinigai, c.data as data, c.komandu_skaicius, d.pavadinimas as organizatorius FROM leidejas a
                               INNER JOIN zaidimas b ON a.id_LEIDEJAS = b.fk_LEIDEJASid_LEIDEJAS
                               INNER JOIN turnyras c ON b.id_ZAIDIMAS = c.fk_ZAIDIMASid_ZAIDIMAS
                               LEFT JOIN(select x.id_ZAIDIMAS, sum(z.prizu_fondo_dydis) as bendra_suma, 
@@ -25,7 +25,7 @@ namespace Lab2.Repos
                               MAX(z.prizu_fondo_dydis) as maximum from turnyras z, zaidimas x WHERE x.id_ZAIDIMAS = z.fk_ZAIDIMASid_ZAIDIMAS
                               GROUP BY x.id_ZAIDIMAS) as t on t.id_ZAIDIMAS = b.id_ZAIDIMAS
                               INNER JOIN organizatorius d ON d.id_ORGANIZATORIUS = c.fk_ORGANIZATORIUSid_ORGANIZATORIUS
-                              WHERE data>= IFNULL(?nuo, data) AND a.ikurimo_metai >= IFNULL(?nuoLeidejoMetai, a.ikurimo_metai) AND c.prizu_fondo_dydis >= IFNULL(?nuoPrizuFondas, c.prizu_fondo_dydis)
+                              WHERE data>= IFNULL(?nuo, data) AND c.komandu_skaicius >= IFNULL(?nuoLeidejoMetai, c.komandu_skaicius) AND c.prizu_fondo_dydis >= IFNULL(?nuoPrizuFondas, c.prizu_fondo_dydis)
                               ORDER BY a.pavadinimas, b.pavadinimas";
             MySqlCommand mySqlCommand = new MySqlCommand(sqlquery, mySqlConnection);
             mySqlCommand.Parameters.Add("?nuo", MySqlDbType.DateTime).Value = nuo;
@@ -42,7 +42,7 @@ namespace Lab2.Repos
                 sutartys.Add(new STurnyrasViewModel
                 {
                     Leidejas = Convert.ToString(item["leidejas"]),
-                    LeidejoMetai = Convert.ToInt32(item["ikurimo_metai"]),
+                    LeidejoMetai = Convert.ToInt32(item["komandu_skaicius"]),
                     Zaidimas = Convert.ToString(item["zaidimas"]),
                     BendraSuma = (float)Convert.ToDouble(item["bendra_suma"]),
                     BendrasKiekis = Convert.ToInt32(item["kiekis"]),

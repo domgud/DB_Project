@@ -19,6 +19,12 @@ namespace Lab2.Controllers
             ataskaita.nuoLeidejoMetai = nuoLeidejoMetai == null ? null : nuoLeidejoMetai;
             ataskaita.nuoTurnyroPinigai = nuoTurnyroPinigai == null ? null : nuoTurnyroPinigai; 
             ataskaita.sutartys = ataskaitos.getAtaskaitaSutartciu(ataskaita.nuo, ataskaita.nuoLeidejoMetai, ataskaita.nuoTurnyroPinigai);
+            foreach (var item in ataskaita.sutartys)
+            {
+                ataskaita.visoSuma += item.Pinigai;
+                
+            }
+            ataskaita.visoKiekis = ataskaita.sutartys.Count;
             return View(ataskaita);
         }
     }

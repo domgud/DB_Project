@@ -9,9 +9,9 @@ namespace Lab2.ViewModels
     public class AtaskaitaViewModel
     {
         public List<STurnyrasViewModel> sutartys { get; set; }
-        public decimal visoSuma { get; set; }
-        public decimal visoKiekis { get; set; }
-        [DataType(DataType.DateTime)]
+        public float visoSuma { get; set; }
+        public int visoKiekis { get; set; }
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? nuo { get; set; }
         public int? nuoLeidejoMetai { get; set; }
