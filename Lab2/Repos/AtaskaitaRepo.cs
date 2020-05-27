@@ -16,7 +16,7 @@ namespace Lab2.Repos
             List<STurnyrasViewModel> sutartys = new List<STurnyrasViewModel>();
             string conn = ConfigurationManager.ConnectionStrings["MysqlConnection"].ConnectionString;
             MySqlConnection mySqlConnection = new MySqlConnection(conn);
-            string sqlquery = @"SELECT a.pavadinimas as leidejas, b.pavadinimas as zaidimas, t.bendra_suma,t.kiekis, t.minimum, t.maximum, c.pavadinimas as turnyras, c.prizu_fondo_dydis as pinigai, c.data as data, c.komandu_skaicius, d.pavadinimas as organizatorius FROM leidejas a
+            string sqlquery = @"SELECT LOWER(a.pavadinimas) as leidejas, UPPER(b.pavadinimas) as zaidimas, t.bendra_suma,t.kiekis, t.minimum, t.maximum, c.pavadinimas as turnyras, c.prizu_fondo_dydis as pinigai, c.data as data, c.komandu_skaicius, d.pavadinimas as organizatorius FROM leidejas a
                               INNER JOIN zaidimas b ON a.id_LEIDEJAS = b.fk_LEIDEJASid_LEIDEJAS
                               INNER JOIN turnyras c ON b.id_ZAIDIMAS = c.fk_ZAIDIMASid_ZAIDIMAS
                               LEFT JOIN(select x.id_ZAIDIMAS, sum(z.prizu_fondo_dydis) as bendra_suma, 
