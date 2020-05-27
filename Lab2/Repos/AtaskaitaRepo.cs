@@ -22,7 +22,7 @@ namespace Lab2.Repos
                               LEFT JOIN(select x.id_ZAIDIMAS, sum(z.prizu_fondo_dydis) as bendra_suma, 
                               COUNT(z.id_TURNYRAS) as kiekis, 
                               MIN(z.prizu_fondo_dydis) as minimum, 
-                              MAX(z.prizu_fondo_dydis) as maximum from turnyras z, zaidimas x WHERE x.id_ZAIDIMAS = z.fk_ZAIDIMASid_ZAIDIMAS
+                              MAX(z.prizu_fondo_dydis) as maximum from turnyras z, zaidimas x WHERE x.id_ZAIDIMAS = z.fk_ZAIDIMASid_ZAIDIMAS AND z.data>=IFNULL(?nuo, z.data) AND z.komandu_skaicius>=IFNULL(?nuoLeidejoMetai, z.komandu_skaicius) AND z.prizu_fondo_dydis>=IFNULL(?nuoPrizuFondas,z.prizu_fondo_dydis)
                               GROUP BY x.id_ZAIDIMAS) as t on t.id_ZAIDIMAS = b.id_ZAIDIMAS
                               INNER JOIN organizatorius d ON d.id_ORGANIZATORIUS = c.fk_ORGANIZATORIUSid_ORGANIZATORIUS
                               WHERE data>= IFNULL(?nuo, data) AND c.komandu_skaicius >= IFNULL(?nuoLeidejoMetai, c.komandu_skaicius) AND c.prizu_fondo_dydis >= IFNULL(?nuoPrizuFondas, c.prizu_fondo_dydis)

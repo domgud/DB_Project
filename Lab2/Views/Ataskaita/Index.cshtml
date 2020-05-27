@@ -23,7 +23,7 @@
 
 
 <table class="table table-striped">
-    <tr style="background-color:lightblue">
+    <tr style="background-color:lightgoldenrodyellow">
         <th>
             @Html.DisplayNameFor(model => model.sutartys[0].Turnyras)
         </th>
@@ -52,7 +52,7 @@
     {
         if (i == 0 || (Model.sutartys[i].Zaidimas != Model.sutartys[i - 1].Zaidimas))
         {
-            <tr style="background-color: lightblue">
+            <tr style="background-color: lightgoldenrodyellow">
                 <td colspan="5" align="center"><b>@Model.sutartys[i].Leidejas @Model.sutartys[i].Zaidimas</b></td>
             </tr>
         }
@@ -77,7 +77,7 @@
 
     }
 
-    <tr style="background-color: lightblue">
+    <tr style="background-color: forestgreen">
         <td height="10" colspan="5" align="center"><b>Bendri duomenys</b></td>
     </tr>
 
